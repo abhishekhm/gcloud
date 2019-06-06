@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Health Data Project<br></h1>
+        <p><h2> Table of Contents</h2><p>
+            <p><h4><a href="#introduction">1. Introduction</a><br><br>
+                <a href="#cleaning">2. Cleaning the Datasets</a><br><br>
+                <a href="#exercise">3. Exercise dataset</a><br><br>
+                <a href="#heartrate">4. Heart Rate dataset</a><br><br>
+                <a href="#stepcount">5. Step Count dataset</a><br><br>
+                <a href="#sleep">6. Sleep dataset</a><br><br>
+                <a href="#summary">7. Summary dataset</a><br><br>
+                <a href="#conclusion">8. CONCLUSION</a><br><br><br>
+            </h4></p>
+
+		<p><a name="introduction"></a><h2>1. Introduction</h2></p>
+            <p>In this project, we analyze a bunch of datasets received from a tracking device. Our main objectives are:</p>
+            <p>- Find interesting patterns from each of the datasets <br> - Make inferences about the individual from the respective datasets <br>
+            - Check if all the datasets correspond to the values of the same individual<br>- PREDICT what kind of individual he or she is from the inferences of the overall observations from all datasets</p>
+            <p><h4>Datasets</h4></p>
+            <p>1. Exercise Dataset<br>2. Step Count Dataset<br>3. Heartrate Dataset<br>4. Floors Climbed Dataset<br>5. Sleep Dataset<br>6. Summary Dataset</p><br>
+
+        <p><a name="cleaning"></a><h2><h2>2. Cleaning the Datasets</h2></p>
+            <p>The datasets were loaded in to a pandas dataframe and the following commands were used in cleaning the datasets:</p>
+            <p>- .head() to get an overview and columns of the dataset<br>- .shape() to check the row and column lengths<br>- .dtypes() to observe the data types of the columns<br>
+                - .describe() to get the summary statistics of the data<br>- .isnull().sum() to check for null values<br>- .drop() to remove unnecessary columns<br>- .sort_values() to sort the table values<br>
+            - .reset_index() to reset the index</p>
+            <p> In addition to the above, the values of columns were changed into a readable format (eg: the date and time values had to be changed from milliseconds to standard format) and extra columns such as
+                day of the week were added.</p>
+
+        <p><h4> Inconsistencies in the datasets</h4><p>
+            <p> Several inconsistencies were noticed in the datasets:</p>
+            <p> - All the datasets did not have the same date range. Some datasets had date ranges from 2016 - 2019 while others had a range of only one month.<br>
+                - There were gaps or missing values for many of the records in the datasets<br>
+                - Some rows with key information were missing</p>
+            <p> The analysis was done with existing data in the cleaned datasets. The summary dataset did contain values for the entire date range of some key values.
+                Therefore, we analyzed the data and cross validated the findings of all datasets with the summary dataset</p><br>
+
+        <p><a name="exercise"></a><h2>3. Exercise dataset</h2></p>
+            <p> The exercise dataset contained information about all exercises performed like walking, running, hiking, swimming, etc. The Exercise dataset has a few interesting patterns.
+            
+            <p><h4>Types and frequency of exercises performed</h4></p>  
+            <p><img src="{{ url_for('static', filename='images/countexercises.png') }}" class="w3-border w3-padding"  style="width:110%" /></p>
+            <p>  Five different time zones were noted in the plots. However, on closer observation, it became clear that UTC -4 & -5 corresponds to one time zone with a difference in day light savings. The same applies for UTC -7 & -8 zones. The other time zone UTC +2 was noted outside of these zones, probably when traveling as there are few records with this time zone.</p>
+            <p> The individual has spent majority of his/her time exercising in the UTC-4/-5 zone (and -4 values are more than -5) - this is most likely where the person lives full time - home location. Change from UTC -4 to -5 and UTC -7 to -8 can be considered as spring-summer / fall-winter periods. We see more frequency of exercises in spring - summer time zones. Walking, Custom and Swimming are the most preferred form of exercises. Other exercises such as Running, hiking, cycling, are occasionally performed and done when not at home.</p>
+            
+            <p><h4>Exercise History</h4></p>
+            <p><img src="{{ url_for('static', filename='images/exercisevstime.png') }}" class="w3-border w3-padding"  style="width:110%" /></p>
+            <p>Plotting the exercises done against time gave us a good insight into the individual's exercise habits. We can see that a big change occurs around December 2017 - Either there is inconsistency in data from June 2016 - December 2018, or there is a radical change in the above person's lifestyle - from casual, running and hiking, this person becomes very active.  <br><br>
+            <p><h4>Observations</h4></p>
+            Due to the inconsistency in data, we will get a complete picture only once we make a comparison of this dataset with the summary dataset. From the data, we noted that the individual spends about 45-50 min everyday on exercise. Overall, we can say that this person is presently quite active, due to the nature of activities and duration of exercises performed, and is most likely in good shape.</p><br>
+        
+        <p><a name="heartrate"></a><h2>4. Heart Rate dataset</h2></p>
+            <p>The heart rate table just contained values of heart rate recorded at a particular instance during a day from 2016 to 2019. As observed in the previous data set, there was a huge change around Dec 2017 - either because of missing data or because the individual had become active and more heart rate entries started getting recorded. If we had resting heart rate records, it would have been more useful to make observations of all data. Due to limited data the below points were noted. 
+            <p><img src="{{ url_for('static', filename='images/heartrate.png') }}" class="w3-border w3-padding"  style="width:110%" /></p>
+            
+            <p><h4>Observations</h4></p>
+            <p> - The heart rate range is between 45 - 65 for the majority of the data and the mean is around 57<br> - Highest heart rates were seen on Fridays and lowest on Wednesday - this corresponded with the dates on which intense exercises were done in the exercise dataset <br> - Like the previous datasets, majority of the heart rate points are in UTC -4 / -5 zone <br> - A big chunk of the heart rate actually comes from 1 AM to 10 AM range <br> - Overall, the average heart rate has became lower by a very small margin towards 2019 - either this is was a sign of the person getting fitter (as increasing fitness levels result in lower resting heart rates) or the person is just switching to performing exercises at a lower intensity</p><br> 
+
+        <p><a name="floorsclimbed"></a><h2>5. Floors Climbed dataset</h2></p>
+            <p> Values of floors climbed from 2018 - 2019 were available in this dataset. The observations were straightforward and we found that the individual climbed around 7-9 floors per day on an average. Below is a plot of the floor climb history.
+            <p><img src="{{ url_for('static', filename='images/floorsclimbed.png') }}" class="w3-border w3-padding"  style="width:110%" /></p>
+            
+            <p><h4>Observations</h4></p>
+            <p>- Just like the previous datasets, majority of the floors climbed were in the UTC -4 / -5 zone (home location)<br> - Two instances where a lot of floors were climbed, took place outside home location <br> - Number of floors climbed lies in the range of 0-30 most of the time with more floors being climbed in the UTC -5 time period (most likely fall-winter as the person probably spent more time indoors)<br> - Overall, the floors climbed by this individual resemble that of an active individual.</p><br>
+
+        <p><a name="stepcount"></a><h2>5. Step Count dataset</h2></p>
+            <p> This dataset contained values entries only from Nov 29, 2018 - Jan 3 2019, despite having many entries. A stepcount entry is basically an entry for the number of steps taken in a 60 second period. Below is a plot of the step count entries noted at different times during a day.</p>
+            <p><img src="{{ url_for('static', filename='images/stepcount.png') }}" class="w3-border w3-padding"  style="width:110%" /></p>
+            <p><h4>Observations</h4></p>
+            <p> There were not too many patterns in this dataset which helped us make concrete judgments about the individual as data was limited. However, we were able to able estimate the individual's height, which is covered in the following section. The general observations are as below:<br> - A strong correlation between calorie, count and distance in the dataset were observed<br> - The individual's total stepcounts varied quite a bit - from 2000 to 25000 steps on different days - this is due to walking (as an exercise) being incorporated as steps on some days<br> -  The bulk of the steps is in the 11AM - 9PM as we can see in the plot. It can be noticed that the individual wakes up during sleep hours and moves around sometimes.</p>
+            <p><h4>Height and gender estimation</h4></p>
+            <p>In general, if you divide a person's step length by their height, the ratio value you get is about 0.4 (with a range from about 0.41 to 0.45). This is why you can take a person's step length and divide it by about 0.43 to roughly estimate their height. (Source:https://www.scientificamerican.com/article/bring-science-home-estimating-height-walk/). 
+            <p> By calculating the stride length, we found that:<br> - The estimated minimum height is  167.7 cms<br> - The estimated average height is  175.5 cms<br> - The estimated maximum height is  184.0 cms<p>
+            <p>From the height estimates for the North American region (as the UTC zone is north american zone), it looks like the person's gender is most likely male (or a female with above avg. height).</p><br>
+
+        <p><a name="sleep"></a><h2>6. Sleep dataset</h2></p>
+            <p>The Sleep dataset was the one where a lot of observations were made. It contained data from 2018 to 2019 in three different time zones. A lot of insights were obtained such as the person's sleep times, time spent in bed, naps and other sleep variables.
+            
+            <p><h4>Bed Time</h4></p>
+            <p><img src="{{ url_for('static', filename='images/bedtime.png') }}" class="w3-border w3-padding"  style="width:80%" /></p>
+            <p> The person is a late sleeper and sleeps around 12 AM and 4 AM majority of the time.
+            
+            <p><h4>Time in bed</h4></p>
+            <p><img src="{{ url_for('static', filename='images/timeinbed.png') }}" class="w3-border w3-padding"  style="width:100%" /></p>
+            <p>We can see that on an average, the total time in bed per day is in the range of 400-500 min (7-8 hours) range - which is a good range of sleep. Also, we noticed that the average sleep time is slowly increasing towards the later parts of the dataset meaning the individual sleeps more now.
+            
+            <p><h4>Naps</h4></p>
+            We noticed several periods of sleep in the dataset at odd times and short durations, which we can label as naps. All sleeps in the 9 AM - 7 PM and duration less than 150 min were considered as naps.
+            <p><img src="{{ url_for('static', filename='images/naps.png') }}" class="w3-border w3-padding"  style="width:120%" /></p>
+            <p> The maximum number of naps being taken on weekends. Also, due to this factor, we observed the range of sleep varying more on the weekends.
+
+            <p><h4>Sleep Debt</h4></p>
+            <p>The total sleep lost for a period is called the sleep debt. For example, if a person usually sleep 8 hours a night, but ends up sleeping 3 hours less for a week, he will have a sleep debt of 21 hours for that week. The normal tendency for any person is to make up for sleep if sleep time is lost on previous night. Assuming that all the values in the dataset were consecutive, a new column of difference in sleep created and plotted against sleep duration of the previous night to check the sleep debt.
+            <p><img src="{{ url_for('static', filename='images/sleepdebt.png') }}" class="w3-border w3-padding"  style="width:90%" /></p>
+            <p>The negative correlation between difference in sleep duration and sleep from previous night suggested that whenever sleep time of lesser than about 450 minutes per day, it was likely that the individual ended up sleeping extra time the next day.    
+            
+            <p><h4>Observations</h4></p>
+            <p> - The individual sleeps between in the range of 12 AM - 4 AM on most nights and naps more on weekends <br> - Overall sleep range is between 400-500 minutes at night, and remains in the similar range even while not in the home zone<br> - Efficiency score of sleep tends to increase with more sleep duration <br> - Sleep increases slightly during fall-winter months<br> - Sleep is more on days when observed sleep times are less the night before</p><br>
+
+        <p><a name="summary"></a><h2>7. Summary dataset</h2></p>
+            <p>The summary dataset contained combination values of all other datsets combined. It contained data from 2016 - 2019. As we had only a portion of some of the other datasets, it was difficult to make a comparison of them with the summary dataset. Plots were made from the data available to check if the values matched.
+            <p><h4>Exercise Distance vs. Summary Distance</h4></p>
+            <p><img src="{{ url_for('static', filename='images/exersummary.png') }}" class="w3-border w3-padding"  style="width:100%" /></p>
+            <p><h4>Stepcount Count vs Summary Count</h4></p>
+            <p><img src="{{ url_for('static', filename='images/stepsummary.png') }}" class="w3-border w3-padding"  style="width:100%" /></p>
+            <p><h4>Observations</h4></p>
+            <p>We saw that there was a difference in distance and step counts values of both plots as compared to the summary plot - although we noticed similarity in their patterns. This was probably due to the inconsistency in the datasets. Eg: the distance from the exercise set contains distance only from doing exercises and not from other activities like climbing stairs and regular moving around - the same can be said of step count as well. Since we did not have the complete data managing from 2016 - 2019 in all datasets, it was difficult to make accurate connections - however, we due to the similarity in trends - we could say that the values in summary dataset corresponded up to some extent to the values in all other datasets.</p><br>
+
+        <p><a name="conclusion"></a><h2>8. CONCLUSION</h2></p>
+        <p>From all the above points, the prediction of the individual is as below: <br></p><p><b> - The individual is most likely a young male, mostly not married and does not have kids - due to the height / stride length, activity levels and sleep patterns<br><br> - He lives in Eastern Standard Time Zone - so most likely located in Canada / America. He sometimes travels to the -7/-8 zone - Pacific Time Zone. His travels include +2000 (Europe / North Africa) and +4300 (Afghanistan / Iran) zones. As we do not have too much data for 2016 for time zones - we can speculate that this individual lived there earlier and then moved to Eastern Time Zone Area <br><br> - He is fairly active and there was a huge shift in his lifestyle after which he has started exercising on a regular basis <br><br> - His sleep times suggest that his daily activities (work or study) take place between 12 noon and 8 PM. The wake up times do suggest that he's probably a student or a part-time worker</b></p><br><br><br>
+
+
+
+
+
+
+
+{% endblock	content %}
