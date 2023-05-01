@@ -16,7 +16,7 @@ dash-renderer==0.24.0
 dash-table==3.7.0
 decorator==4.4.0
 enum34==1.1.6
-Flask==1.0.3
+Flask==2.3.2
 Flask-Bcrypt==0.7.1
 Flask-Compress==1.4.0
 Flask-Login==0.4.1
